@@ -19,8 +19,9 @@ pipeline {
             steps {
                 sshagent([SSH_KEY_ID]) {
                     sh """
-                    ssh -o StrictHostKeyChecking=no $DEPLOY_USER@$DEPLOY_HOST "mkdir -p $APP_DIR"
-                    scp -o StrictHostKeyChecking=no -r * $DEPLOY_USER@$DEPLOY_HOST:$APP_DIR/
+                        ssh -o StrictHostKeyChecking=no $DEPLOY_USER@$DEPLOY_HOST "mkdir -p $APP_DIR"
+                        scp -o StrictHostKeyChecking=no -r * $DEPLOY_USER@$DEPLOY_HOST:$APP_DIR/
+                        ssh -o StrictHostKeyChecking=no $DEPLOY_USER@$DEPLOY_HOST "sudo systemctl restart nginx"
                     """
                 }
             }
